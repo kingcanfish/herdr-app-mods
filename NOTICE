@@ -1,0 +1,29 @@
+herdr-app-mods
+
+This project contains modified copies of files from Herdr (https://herdr.dev),
+licensed under the Apache License, Version 2.0. The original files were
+created with `herdr-app do mod.clone` and `herdr-app do layout.clone` from
+Herdr 0.1.18.
+
+Changes:
+
+- mods/agents-title/main.js (from Herdr's `agents` mod)
+  - Default sort is "Grouped by space" instead of "Priority".
+  - In grouped view, agents within a space sort by status rank, then by
+    latest status change.
+  - In priority/pinned rows, the agent's title leads and the space name
+    follows, dimmed.
+  - Agents on machines listed in shared("machines.folded") are hidden,
+    except pinned agents and agents whose status is blocked.
+  - The working spinner turns every 2000 ms instead of 900 ms.
+
+- mods/spaces-fold/main.js (from Herdr's `spaces` mod)
+  - Publishes the folded machines to shared("machines.folded") on start
+    and whenever a machine is folded or unfolded.
+
+- layouts/my-main.json (from Herdr's `main` layout)
+  - Uses the `agents-title` and `spaces-fold` mods and the `ghostty` theme.
+
+The remaining files (themes/ghostty.json, settings.example.json, install.sh,
+README.md) are original to this project. themes/ghostty.json reproduces
+Ghostty's default color palette.
