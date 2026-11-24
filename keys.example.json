@@ -1,0 +1,6 @@
+{
+  "global": {
+    "cmd-shift-p": "mod.open:picker-title",
+    "cmd-shift-w": "mod.open:picker-title"
+  }
+}

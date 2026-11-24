@@ -35,7 +35,7 @@ for m in "$repo"/mods/*/; do
   name="$(basename "$m")"
   save "mods/$name"
   mkdir -p "$home/mods/$name"
-  cp "$m"main.js "$m"mod.json "$m"jsconfig.json "$home/mods/$name/"
+  cp -R "$m". "$home/mods/$name/"
   # Editor typings: Herdr writes them beside its own mods; borrow them if there.
   [ -f "$home/mods/agents/gpui-kit.d.ts" ] && cp "$home/mods/agents/gpui-kit.d.ts" "$home/mods/$name/"
 done
@@ -45,6 +45,18 @@ save layouts/my-main.json
 cp "$repo/layouts/my-main.json" "$home/layouts/"
 save themes/ghostty.json
 cp "$repo/themes/ghostty.json" "$home/themes/"
+
+# Point the search shortcuts at picker-title; other key bindings stay as they are.
+save keys.json
+python3 - "$home/keys.json" "$repo/keys.example.json" <<'PY'
+import json, os, sys
+target, example = sys.argv[1], sys.argv[2]
+current = json.load(open(target)) if os.path.exists(target) else {}
+for scope, binds in json.load(open(example)).items():
+    current.setdefault(scope, {}).update(binds)
+with open(target, "w") as f:
+    json.dump(current, f, indent=2, ensure_ascii=False)
+PY
 
 if [ "$settings" = 1 ]; then
   save settings.json

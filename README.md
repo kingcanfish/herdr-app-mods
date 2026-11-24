@@ -10,7 +10,10 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 |---|---|
 | `mods/agents-title/` | A modified copy of Herdr's **Agents** sidebar list (see below). |
 | `mods/spaces-fold/` | A copy of Herdr's **Spaces** list that also publishes which machines are folded, so the Agents list can fold with it. |
-| `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the two mods above and the `ghostty` theme. |
+| `mods/picker-title/` | A copy of Herdr's search **picker** that labels and matches unnamed tabs by their agent's title, as the tab strip does, instead of by tab number. |
+| `mods/workspace-chrome-title/` | A copy of Herdr's sidebar header and footer whose search button opens `picker-title`. |
+| `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
+| `keys.example.json` | Points Cmd+Shift+P and Cmd+Shift+W at `picker-title`. It's merged into `keys.json`; your other bindings stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors). |
 | `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px, regular weight. |
 
@@ -39,11 +42,13 @@ cd herdr-app-mods
 
 ## After a Herdr update
 
-`agents-title` and `spaces-fold` are copies of Herdr's `agents` and `spaces` mods as of version **0.1.18**, so they don't pick up later changes to those mods. If the sidebar breaks after an update, re-clone the shipped mods and apply the edits again. Every change is marked with an `agents-title:` or `spaces-fold:` comment in `main.js`, which makes them easy to find with `grep`.
+The mods here are copies of Herdr's `agents`, `spaces`, `picker` and `workspace-chrome` mods as of version **0.1.18**, so they don't pick up later changes to those mods. If the sidebar breaks after an update, re-clone the shipped mods and apply the edits again. Every change is marked in `main.js` with a comment naming its mod (`agents-title:`, `spaces-fold:`, `picker-title:`, `workspace-chrome-title:`), which makes them easy to find with `grep`.
 
 ```sh
 herdr-app do mod.clone '{"name":"agents","as":"agents-title"}'
 herdr-app do mod.clone '{"name":"spaces","as":"spaces-fold"}'
+herdr-app do mod.clone '{"name":"picker","as":"picker-title"}'
+herdr-app do mod.clone '{"name":"workspace-chrome","as":"workspace-chrome-title"}'
 herdr-app check ~/.config/herdr-app/mods/agents-title
 ```
 
@@ -66,7 +71,10 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
   - 在 Spaces 里折叠远程机器时，这台机器上的会话也会一起收起；置顶的会话和需要你处理的会话不会被藏起来
   - 运行中的转圈改为 2 秒一圈，减轻 30fps 带来的卡顿感
 - **`mods/spaces-fold/`**：Spaces 列表的副本，把哪些机器被折叠了共享给 Agents 列表
-- **`layouts/my-main.json`**：使用上面两个 mod 和 ghostty 主题的布局
+- **`mods/picker-title/`**：搜索框的副本。没命名的标签页和顶部标签栏一样显示 Agent 标题，不再显示编号，也能按标题搜索
+- **`mods/workspace-chrome-title/`**：侧栏顶部和底部的副本，只改了一处：放大镜按钮打开 `picker-title`
+- **`layouts/my-main.json`**：使用上面这些 mod 和 ghostty 主题的布局
+- **`keys.example.json`**：把 `Cmd+Shift+P`、`Cmd+Shift+W` 改为打开 `picker-title`，安装时合并进 `keys.json`，其他快捷键不变
 - **`themes/ghostty.json`**：Ghostty 默认配色
 - **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，常规字重
 
@@ -85,4 +93,4 @@ cd herdr-app-mods
 
 ### Herdr 更新后
 
-这两个 mod 是从 Herdr 0.1.18 的官方 mod 复制来改的，Herdr 更新后它们不会跟着更新。如果侧栏显示出了问题，需要重新复制官方 mod，再把改动加回去。改动的地方在 `main.js` 里都标了 `agents-title:` 或 `spaces-fold:` 注释，可以直接搜索找到。
+这些 mod 是从 Herdr 0.1.18 的官方 mod 复制来改的，Herdr 更新后它们不会跟着更新。如果侧栏显示出了问题，需要重新复制官方 mod，再把改动加回去。改动的地方在 `main.js` 里都标了以 mod 名开头的注释（如 `agents-title:`、`picker-title:`），可以直接搜索找到。

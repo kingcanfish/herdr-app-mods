@@ -15,7 +15,7 @@
           "id": "brand",
           "type": "block",
           "content": {
-            "mod": "workspace-chrome"
+            "mod": "workspace-chrome-title"
           },
           "size": {
             "px": 46
@@ -54,7 +54,7 @@
           "id": "sidebar-footer",
           "type": "block",
           "content": {
-            "mod": "workspace-chrome",
+            "mod": "workspace-chrome-title",
             "props": {
               "footer": true
             }

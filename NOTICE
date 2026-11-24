@@ -21,9 +21,18 @@ Changes:
   - Publishes the folded machines to shared("machines.folded") on start
     and whenever a machine is folded or unfolded.
 
-- layouts/my-main.json (from Herdr's `main` layout)
-  - Uses the `agents-title` and `spaces-fold` mods and the `ghostty` theme.
+- mods/picker-title/main.js (from Herdr's `picker` mod)
+  - Labels an unnamed tab by its lead agent's live title, using the same
+    rule as the `tabs` mod's label(), and includes that label in the filter.
 
-The remaining files (themes/ghostty.json, settings.example.json, install.sh,
+- mods/workspace-chrome-title/main.js (from Herdr's `workspace-chrome` mod)
+  - The sidebar search button opens `picker-title` instead of `picker`.
+
+- layouts/my-main.json (from Herdr's `main` layout)
+  - Uses the `agents-title`, `spaces-fold` and `workspace-chrome-title` mods
+    and the `ghostty` theme.
+
+The remaining files (themes/ghostty.json, settings.example.json,
+keys.example.json, install.sh,
 README.md) are original to this project. themes/ghostty.json reproduces
 Ghostty's default color palette.
