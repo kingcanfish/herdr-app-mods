@@ -12,6 +12,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | `mods/spaces-fold/` | A copy of Herdr's **Spaces** list that also publishes which machines are folded, so the Agents list can fold with it. |
 | `mods/picker-title/` | A copy of Herdr's search **picker** that labels and matches unnamed tabs by their agent's title, as the tab strip does, instead of by tab number. |
 | `mods/workspace-chrome-title/` | A copy of Herdr's sidebar header and footer whose search button opens `picker-title`. |
+| `mods/tabs-spin/`, `mods/pane-spin/` | Copies of Herdr's tab strip and pane header whose working spinner turns at the same 2 s speed as the Agents list. |
 | `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
 | `keys.example.json` | Points Cmd+Shift+P and Cmd+Shift+W at `picker-title`. It's merged into `keys.json`; your other bindings stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors). |
@@ -23,7 +24,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 - **Within each space**, agents sort by urgency, then by latest activity: needs you, done, working, idle; in each of those, the most recent status change comes first. Spaces keep their order.
 - In the Priority view, the **title leads** and the space name follows, dimmed, so the title is no longer cut off.
 - **Folding a remote machine in Spaces folds its agents too.** Pinned agents and agents that need you stay visible.
-- The working spinner turns once every 2 s instead of 0.9 s. Herdr draws `spin()` at about 30 fps, which looks choppy at the faster speed.
+- The working spinner turns once every 2 s instead of 0.9 s. Herdr draws `spin()` at about 30 fps, which looks choppy at the faster speed. The search picker, tab strip and pane header spinners use the same speed.
 
 ## Install
 
@@ -42,13 +43,15 @@ cd herdr-app-mods
 
 ## After a Herdr update
 
-The mods here are copies of Herdr's `agents`, `spaces`, `picker` and `workspace-chrome` mods as of version **0.1.18**, so they don't pick up later changes to those mods. If the sidebar breaks after an update, re-clone the shipped mods and apply the edits again. Every change is marked in `main.js` with a comment naming its mod (`agents-title:`, `spaces-fold:`, `picker-title:`, `workspace-chrome-title:`), which makes them easy to find with `grep`.
+The mods here are copies of Herdr's `agents`, `spaces`, `picker`, `workspace-chrome`, `tabs` and `pane` mods as of version **0.1.18**, so they don't pick up later changes to those mods. If the sidebar breaks after an update, re-clone the shipped mods and apply the edits again. Every change is marked in `main.js` with a comment naming its mod (`agents-title:`, `spaces-fold:`, `picker-title:`, `workspace-chrome-title:`), which makes them easy to find with `grep`.
 
 ```sh
 herdr-app do mod.clone '{"name":"agents","as":"agents-title"}'
 herdr-app do mod.clone '{"name":"spaces","as":"spaces-fold"}'
 herdr-app do mod.clone '{"name":"picker","as":"picker-title"}'
 herdr-app do mod.clone '{"name":"workspace-chrome","as":"workspace-chrome-title"}'
+herdr-app do mod.clone '{"name":"tabs","as":"tabs-spin"}'
+herdr-app do mod.clone '{"name":"pane","as":"pane-spin"}'
 herdr-app check ~/.config/herdr-app/mods/agents-title
 ```
 
@@ -72,6 +75,7 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
   - 运行中的转圈改为 2 秒一圈，减轻 30fps 带来的卡顿感
 - **`mods/spaces-fold/`**：Spaces 列表的副本，把哪些机器被折叠了共享给 Agents 列表
 - **`mods/picker-title/`**：搜索框的副本。没命名的标签页和顶部标签栏一样显示 Agent 标题，不再显示编号，也能按标题搜索
+- **`mods/tabs-spin/`、`mods/pane-spin/`**：顶部标签栏和 pane 标题栏的副本，运行中的转圈速度改成 2 秒一圈，和 Agents 列表一致
 - **`mods/workspace-chrome-title/`**：侧栏顶部和底部的副本，只改了一处：放大镜按钮打开 `picker-title`
 - **`layouts/my-main.json`**：使用上面这些 mod 和 ghostty 主题的布局
 - **`keys.example.json`**：把 `Cmd+Shift+P`、`Cmd+Shift+W` 改为打开 `picker-title`，安装时合并进 `keys.json`，其他快捷键不变

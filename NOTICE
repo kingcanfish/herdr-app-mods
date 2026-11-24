@@ -24,13 +24,18 @@ Changes:
 - mods/picker-title/main.js (from Herdr's `picker` mod)
   - Labels an unnamed tab by its lead agent's live title, using the same
     rule as the `tabs` mod's label(), and includes that label in the filter.
+  - The working spinner turns every 2000 ms instead of 900 ms.
 
 - mods/workspace-chrome-title/main.js (from Herdr's `workspace-chrome` mod)
   - The sidebar search button opens `picker-title` instead of `picker`.
 
+- mods/tabs-spin/main.js (from Herdr's `tabs` mod) and
+  mods/pane-spin/main.js (from Herdr's `pane` mod)
+  - The working spinner turns every 2000 ms instead of 900 ms.
+
 - layouts/my-main.json (from Herdr's `main` layout)
-  - Uses the `agents-title`, `spaces-fold` and `workspace-chrome-title` mods
-    and the `ghostty` theme.
+  - Uses the `agents-title`, `spaces-fold`, `workspace-chrome-title`,
+    `tabs-spin` and `pane-spin` mods and the `ghostty` theme.
 
 The remaining files (themes/ghostty.json, settings.example.json,
 keys.example.json, install.sh,

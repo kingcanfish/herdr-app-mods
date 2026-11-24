@@ -80,7 +80,7 @@
           "id": "tabs",
           "type": "block",
           "content": {
-            "mod": "tabs"
+            "mod": "tabs-spin"
           },
           "size": {
             "px": 42
@@ -99,7 +99,7 @@
                 "pane": {
                   "header": {
                     "content": {
-                      "mod": "pane"
+                      "mod": "pane-spin"
                     },
                     "reveal": "always",
                     "height": 30,
