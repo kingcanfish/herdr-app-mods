@@ -16,7 +16,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
 | `keys.example.json` | Points Cmd+Shift+P and Cmd+Shift+W at `picker-title`. It's merged into `keys.json`; your other bindings stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors). |
-| `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px, regular weight. |
+| `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px, light weight (300, since Herdr draws text heavier than Ghostty), programming ligatures on. |
 
 ### Agents list changes (`agents-title`)
 
@@ -80,7 +80,7 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
 - **`layouts/my-main.json`**：使用上面这些 mod 和 ghostty 主题的布局
 - **`keys.example.json`**：把 `Cmd+Shift+P`、`Cmd+Shift+W` 改为打开 `picker-title`，安装时合并进 `keys.json`，其他快捷键不变
 - **`themes/ghostty.json`**：Ghostty 默认配色
-- **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，常规字重
+- **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，字重 300（Herdr 渲染比 Ghostty 偏粗），开启编程连字
 
 ### 安装
 
