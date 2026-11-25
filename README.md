@@ -14,7 +14,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | `mods/workspace-chrome-title/` | A copy of Herdr's sidebar header and footer whose search button opens `picker-title`. |
 | `mods/tabs-spin/`, `mods/pane-spin/` | Copies of Herdr's tab strip and pane header whose working spinner turns at the same 2 s speed as the Agents list. |
 | `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
-| `keys.example.json` | Points Cmd+Shift+P and Cmd+Shift+W at `picker-title`. It's merged into `keys.json`; your other bindings stay. |
+| `keys.example.json` | My full key bindings: Cmd+Shift+P and Cmd+Shift+W open `picker-title`; Cmd+Up/Down switch spaces, Cmd+Left/Right switch tabs, Cmd+[ / ] move between panes left/right, Cmd+Shift+[ / ] up/down, Cmd+W closes the pane, Cmd+R / Cmd+Shift+R rename the tab / space, Cmd+Ctrl+W closes the space. Merged into `keys.json` key by key; bindings not listed here stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors). |
 | `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px, light weight (300, since Herdr draws text heavier than Ghostty), programming ligatures on. |
 
@@ -78,7 +78,7 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
 - **`mods/tabs-spin/`、`mods/pane-spin/`**：顶部标签栏和 pane 标题栏的副本，运行中的转圈速度改成 2 秒一圈，和 Agents 列表一致
 - **`mods/workspace-chrome-title/`**：侧栏顶部和底部的副本，只改了一处：放大镜按钮打开 `picker-title`
 - **`layouts/my-main.json`**：使用上面这些 mod 和 ghostty 主题的布局
-- **`keys.example.json`**：把 `Cmd+Shift+P`、`Cmd+Shift+W` 改为打开 `picker-title`，安装时合并进 `keys.json`，其他快捷键不变
+- **`keys.example.json`**：我的完整快捷键。`Cmd+Shift+P`、`Cmd+Shift+W` 打开 `picker-title`；`Cmd+↑/↓` 切换空间，`Cmd+←/→` 切换标签，`Cmd+[ / ]` 左右切换窗格，`Cmd+Shift+[ / ]` 上下切换窗格，`Cmd+W` 关闭窗格，`Cmd+R` / `Cmd+Shift+R` 重命名标签 / 空间，`Cmd+Ctrl+W` 关闭空间。安装时按键逐条合并进 `keys.json`，这里没列的快捷键保持不变
 - **`themes/ghostty.json`**：Ghostty 默认配色
 - **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，字重 300（Herdr 渲染比 Ghostty 偏粗），开启编程连字
 
