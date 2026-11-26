@@ -75,6 +75,8 @@
     "alt-left": "send:\u001bb",
     "alt-right": "send:\u001bf",
     "alt-backspace": "send:\u0017",
+    "cmd-left": "tab.prev",
+    "cmd-right": "tab.next",
     "cmd-backspace": "send:\u0015"
   }
 }
