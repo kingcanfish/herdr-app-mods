@@ -16,7 +16,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
 | `keys.example.json` | My full key bindings: Cmd+P opens the command palette; Cmd+Shift+P and Cmd+Shift+W open `picker-title`; Cmd+Up/Down switch spaces, Cmd+Left/Right switch tabs, Cmd+[ / ] move between panes left/right, Cmd+Shift+[ / ] up/down, Cmd+W closes the pane, Cmd+R / Cmd+Shift+R rename the tab / space, Cmd+Ctrl+W closes the space. Merged into `keys.json` key by key; bindings not listed here stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors), plus fixed status colors: working blue `#7aa6da`, done green `#b9ca4a`, needs-you red `#d54e53`. |
-| `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px, light weight (300, since Herdr draws text heavier than Ghostty), programming ligatures on. |
+| `settings.example.json` | Look settings merged into `settings.json`: theme, Maple Mono CN at 13 px for terminals, PingFang SC for the interface, light weight (300, since Herdr draws text heavier than Ghostty), programming ligatures on. |
 
 ### Agents list changes (`agents-title`)
 
@@ -95,7 +95,7 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
 - **`keys.example.json`**：我的完整快捷键。`Cmd+P` 打开命令面板；`Cmd+Shift+P`、`Cmd+Shift+W` 打开 `picker-title`；`Cmd+↑/↓` 切换空间，`Cmd+←/→` 切换标签，`Cmd+[ / ]` 左右切换窗格，`Cmd+Shift+[ / ]` 上下切换窗格，`Cmd+W` 关闭窗格，`Cmd+R` / `Cmd+Shift+R` 重命名标签 / 空间，`Cmd+Ctrl+W` 关闭空间。安装时按键逐条合并进 `keys.json`，这里没列的快捷键保持不变
 - **`themes/ghostty.json`**：Ghostty 默认配色，并固定了状态颜色：运行中蓝 `#7aa6da`、完成绿 `#b9ca4a`、需要你红 `#d54e53`
 - **状态图标统一**：每种状态有自己的形状，不只靠颜色。需要你是 `Needs you` 标签或 `!`；完成是绿色勾（窗格标题是绿色 `Done` 标签，Spaces 收起时是 `✓`）；运行中是盲文字符转圈；空闲是暗色空心圈。Agents 列表、标签栏、窗格标题、Spaces、搜索框都一样
-- **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，字重 300（Herdr 渲染比 Ghostty 偏粗），开启编程连字
+- **`settings.example.json`**：外观设置，终端字体为 Maple Mono CN，字号 13，界面字体为苹方（PingFang SC），字重 300（Herdr 渲染比 Ghostty 偏粗），开启编程连字
 
 ### 安装
 

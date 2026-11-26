@@ -1,6 +1,7 @@
 {
   "theme": "ghostty",
   "font": "Maple Mono CN",
+  "ui_font": "PingFang SC",
   "font_size": 13,
   "font_weight": 300,
   "font_ligatures": true
