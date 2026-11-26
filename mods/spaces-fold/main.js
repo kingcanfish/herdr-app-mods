@@ -70,7 +70,7 @@ function spaceAvatar(name) {
 
 // A space speaks up only when something in it needs you.
 export function glyph(status) {
-  return status === "blocked" || status === "done" ? "●" : "·";
+  return status === "blocked" ? "!" : status === "done" ? "✓" : "·"; // spaces-fold: ! and ✓ (was ● for both)
 }
 
 export function tone(t, status) {

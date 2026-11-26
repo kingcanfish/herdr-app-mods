@@ -214,6 +214,8 @@ export default class Agents extends View {
     if (a.status === "working") return svg("mods/workspace-chrome/spinner.svg").size(12).mx(1).flex_none().text_color(t.working).spin(2000); // agents-title: 2 s a turn (was 900 ms); spin() draws at ~30 fps
     if (a.status === "blocked" && compact) return div().size(14).flex_none().rounded(4).bg(t.blocked + "26").text_size(10.5).font_bold().text_color(t.blocked).flex().items_center().justify_center().child("!");
     if (a.status === "blocked") return div().flex_none().px(6).h(18).rounded(5).bg(t.blocked + "26").text_size(10.5).font_semibold().text_color(t.blocked).flex().items_center().child("Needs you");
+    // agents-title: done is a check in the done color, so it reads apart from idle's ring.
+    if (a.status === "done") return svg("mods/workspace-chrome/circle-check.svg").size(12).mx(1).flex_none().text_color(t.done);
     // Idle: a ring; done: a dot.
     if (a.status === "idle") return div().size(7).mx(3).flex_none().rounded(4).border(1.5).border_color(t.idle ?? t.dim);
     return div().size(7).mx(3).flex_none().rounded(4).bg(a.status === "done" ? color : t.dim + "00");
@@ -382,7 +384,7 @@ export default class Agents extends View {
           })).child(pic)))
         .child(h_flex().flex_1().min_w(0).gap(5).items_center()
           // agents-title: the session title leads and takes the room; the space follows, dim.
-          .child(div().flex_1().min_w(0).truncate().text_color(idle ? t.muted : t.foreground).child(name))
+          .child(div().flex_1().min_w(0).truncate().text_color(idle ? t.muted : t.foreground).when(a.status === "done", el => el.font_semibold()).child(name)) /* agents-title: a done title reads bold, like unread mail, until you look */
           .when(full && Boolean(more) && Boolean(a.space_name), el => el.child(div().flex_none().max_w(90).truncate().text_color(t.dim).child(`\u00b7 ${a.space_name}`))))
         .when(Boolean(machine), el => el.child(div().text_size(10).text_color(t.dim).child(machine)))
         .when(subs.length > 0, el => el.child(fold(a, subs)))
