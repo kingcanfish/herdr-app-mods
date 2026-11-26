@@ -16,7 +16,7 @@
     "cmd-[": "pane.go:left",
     "cmd-shift-l": "layout.switch",
     "cmd-n": "space.new",
-    "cmd-p": "mod.open:picker",
+    "cmd-p": "app.palette",
     "cmd-shift-p": "mod.open:picker-title",
     "cmd-,": "app.settings",
     "cmd-d": "pane.split:right",
