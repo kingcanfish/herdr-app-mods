@@ -7,6 +7,7 @@
 import { View, div, svg, image } from "gpui-kit";
 import { h_flex } from "gpui-base";
 import { panes, props, run, theme, home, layout } from "herdr";
+const SPIN = ["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"]; // 8-dot braille spinner: fuller than the 6-dot one, so it reads at sidebar size
 
 // Match the first visible tab frame, including the active child of a stack.
 function paneFrame(node) {
@@ -81,7 +82,7 @@ export default class Pane extends View {
       .when(Boolean(pic), (el) => el.child(pic))
       .child(div().flex_none().truncate().max_w(260).font_medium().text_color(t.foreground).child(name))
       .child(div().flex_1().truncate().text_color(t.dim).child(folder(p.cwd)))
-      .when(st === "working", el => el.child(svg("mods/workspace-chrome/spinner.svg").size(12).flex_none().text_color(t.working).spin(2000))) /* pane-spin: 2 s a turn (was 900 ms), matching agents-title */
+      .when(st === "working", el => el.child(div().w(14).flex_none().text_size(16).font_family("Maple Mono CN").font_weight(700).text_color(t.working).frames(SPIN, 90).child(SPIN[0]))) /* pane-spin: a braille character spinner, matching agents-title (was a ring icon) */
       .when(st === "blocked", el => el.child(div().flex_none().px(6).h(18).flex().items_center().rounded(5).bg(t.blocked + "26").text_size(10.5).font_semibold().text_color(t.blocked).child("Needs you")))
       .when(st === "done", el => el.child(div().flex_none().px(6).h(18).flex().items_center().rounded(5).bg(t.done + "26").text_size(10.5).font_semibold().text_color(t.done).child("Done"))) /* pane-spin: a Done badge like Needs you (was a 7 px dot) */
       .when(this.hovered, el => el

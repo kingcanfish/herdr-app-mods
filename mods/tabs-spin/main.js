@@ -1,6 +1,7 @@
 import { View, div, svg, image } from "gpui-kit";
 import { h_flex, ScrollHandle } from "gpui-base";
 import { spaces, panes, run, openOverlay, theme, window, shared, layout, settings } from "herdr";
+const SPIN = ["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"]; // 8-dot braille spinner: fuller than the 6-dot one, so it reads at sidebar size
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -119,7 +120,7 @@ export default class Tabs extends View {
         .on_mouse_down("right", (_e, cx) => { cx.stop_propagation(); openOverlay({ mod: "menu", kind: "popup", width: 200, props: { tab: "tab", target: { id: c.id, space: space.id } } }); })
         .when(Boolean(program?.icon), el => el.child(program.tint ? svg(program.icon).size(14).text_color(t.muted) : image(program.icon).size(14)))
         .child(div().max_w(170).truncate().child(c.zoomed ? `${name} Z` : name))
-        .when(c.status === "working", el => el.child(svg("mods/workspace-chrome/spinner.svg").size(12).flex_none().text_color(t.working).spin(2000))) /* tabs-spin: 2 s a turn (was 900 ms), matching agents-title */
+        .when(c.status === "working", el => el.child(div().w(14).flex_none().text_size(16).font_family("Maple Mono CN").font_weight(700).text_color(t.working).frames(SPIN, 90).child(SPIN[0]))) /* tabs-spin: a braille character spinner, matching agents-title (was a ring icon) */
         /* tabs-spin: done a check, blocked a ! badge, matching agents-title (was a 6 px dot for both) */
         .when(c.status === "done", el => el.child(svg("mods/workspace-chrome/circle-check.svg").size(12).flex_none().text_color(t.done)))
         .when(c.status === "blocked", el => el.child(div().size(14).flex_none().rounded(4).bg(t.blocked + "26").text_size(10.5).font_bold().text_color(t.blocked).flex().items_center().justify_center().child("!")))

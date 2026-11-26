@@ -3,6 +3,7 @@
 import { View, div, image, svg } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
 import { agents, terminals, panes, focused, spaces, run, theme, shared, setShared, setAgentOrder, openOverlay, closeOverlay, props, window, layout } from "herdr";
+const SPIN = ["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"]; // 8-dot braille spinner: fuller than the 6-dot one, so it reads at sidebar size
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -211,7 +212,7 @@ export default class Agents extends View {
   // compact: a ! for blocked where a header already says "Needs you".
   status(t, a, compact = false) {
     const color = t[a.status] ?? t.dim;
-    if (a.status === "working") return svg("mods/workspace-chrome/spinner.svg").size(12).mx(1).flex_none().text_color(t.working).spin(2000); // agents-title: 2 s a turn (was 900 ms); spin() draws at ~30 fps
+    if (a.status === "working") return div().w(14).mx(1).flex_none().text_size(16).font_family("Maple Mono CN").font_weight(700).text_color(t.working).frames(SPIN, 90).child(SPIN[0]); // agents-title: a braille character spinner (was a ring icon turning every 2 s)
     if (a.status === "blocked" && compact) return div().size(14).flex_none().rounded(4).bg(t.blocked + "26").text_size(10.5).font_bold().text_color(t.blocked).flex().items_center().justify_center().child("!");
     if (a.status === "blocked") return div().flex_none().px(6).h(18).rounded(5).bg(t.blocked + "26").text_size(10.5).font_semibold().text_color(t.blocked).flex().items_center().child("Needs you");
     // agents-title: done is a check in the done color, so it reads apart from idle's ring.

@@ -7,6 +7,7 @@
 import { View, div, svg } from "gpui-kit";
 import { v_flex, h_flex, InputState, Input } from "gpui-base";
 import { agents, spaces, terminals, panes, run, hc, theme, settings, props, closeOverlay, openOverlay, shared, setShared } from "herdr";
+const SPIN = ["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"]; // 8-dot braille spinner: fuller than the 6-dot one, so it reads at sidebar size
 
 // picker-title: label a tab the way the tab strip does (mods/tabs label()): a tab the person
 // named keeps its name; otherwise it follows its agent's live title, else its program.
@@ -141,7 +142,7 @@ export default class Picker extends View {
   }
 
   glyph(t, st) {
-    if (st === "working") return svg("mods/workspace-chrome/spinner.svg").size(12).flex_none().text_color(t.working).spin(2000); /* picker-title: 2 s a turn (was 900 ms), matching agents-title */
+    if (st === "working") return div().w(14).flex_none().text_size(16).font_family("Maple Mono CN").font_weight(700).text_color(t.working).frames(SPIN, 90).child(SPIN[0]); /* picker-title: a braille character spinner, matching agents-title (was a ring icon) */
     if (st === "done") return svg("mods/workspace-chrome/circle-check.svg").size(12).flex_none().text_color(t.done); /* picker-title: done a check, blocked !, matching agents-title */
     return div().w(12).flex_none().text_color(t[st] ?? t.dim).child(st === "idle" ? "○" : st === "blocked" ? "!" : st ? "●" : "·");
   }

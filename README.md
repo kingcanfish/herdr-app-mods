@@ -12,7 +12,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | `mods/spaces-fold/` | A copy of Herdr's **Spaces** list that also publishes which machines are folded, so the Agents list can fold with it. |
 | `mods/picker-title/` | A copy of Herdr's search **picker** that labels and matches unnamed tabs by their agent's title, as the tab strip does, instead of by tab number. |
 | `mods/workspace-chrome-title/` | A copy of Herdr's sidebar header and footer whose search button opens `picker-title`. |
-| `mods/tabs-spin/`, `mods/pane-spin/` | Copies of Herdr's tab strip and pane header whose working spinner turns at the same 2 s speed as the Agents list. |
+| `mods/tabs-spin/`, `mods/pane-spin/` | Copies of Herdr's tab strip and pane header with the same status icons and character spinner as the Agents list. |
 | `layouts/my-main.json` | A copy of Herdr's `main` layout that uses the mods above and the `ghostty` theme. |
 | `keys.example.json` | My full key bindings: Cmd+Shift+P and Cmd+Shift+W open `picker-title`; Cmd+Up/Down switch spaces, Cmd+Left/Right switch tabs, Cmd+[ / ] move between panes left/right, Cmd+Shift+[ / ] up/down, Cmd+W closes the pane, Cmd+R / Cmd+Shift+R rename the tab / space, Cmd+Ctrl+W closes the space. Merged into `keys.json` key by key; bindings not listed here stay. |
 | `themes/ghostty.json` | Ghostty's default color scheme (background `#282c34`, its 16 ANSI colors), plus fixed status colors: working blue `#7aa6da`, done green `#b9ca4a`, needs-you red `#d54e53`. |
@@ -24,7 +24,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 - **Within each space**, agents sort by urgency, then by latest activity: needs you, done, working, idle; in each of those, the most recent status change comes first. Spaces keep their order.
 - In the Priority view, the **title leads** and the space name follows, dimmed, so the title is no longer cut off.
 - **Folding a remote machine in Spaces folds its agents too.** Pinned agents and agents that need you stay visible.
-- The working spinner turns once every 2 s instead of 0.9 s. Herdr draws `spin()` at about 30 fps, which looks choppy at the faster speed. The search picker, tab strip and pane header spinners use the same speed.
+- The working spinner is a character spinner, 8-dot braille `⣾⣽⣻⢿⡿⣟⣯⣷` in Maple Mono CN at 16 px bold, instead of a turning ring icon. It uses Herdr's native `.frames()` (90 ms a frame), so it costs no timer. The search picker, tab strip and pane header use the same spinner.
 
 ### Status icons, the same everywhere
 
@@ -34,7 +34,7 @@ Each status has its own shape, so it doesn't rely on color alone, and the same i
 |---|---|---|---|---|---|
 | Needs you | `Needs you` badge / `!` | `!` badge | `Needs you` badge | `!` | `!` |
 | Done | green check, **bold title** | green check | green `Done` badge | `✓` | green check |
-| Working | spinner | spinner | spinner | – | spinner |
+| Working | `⣾` braille spinner | `⣾` braille spinner | `⣾` braille spinner | – | `⣾` braille spinner |
 | Idle | dim ring | – | – | `·` | `○` |
 
 Herdr turns done into idle once you look at the agent, so the check and bold title go away by themselves.
@@ -85,16 +85,16 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
   - 空间内先按状态排（Needs you > Done > Working > Idle），同一状态下最近有变化的排在前面
   - Priority 视图里标题在前、空间名在后
   - 在 Spaces 里折叠远程机器时，这台机器上的会话也会一起收起；置顶的会话和需要你处理的会话不会被藏起来
-  - 运行中的转圈改为 2 秒一圈，减轻 30fps 带来的卡顿感
+  - 运行中改为字符转圈：8 点盲文 `⣾⣽⣻⢿⡿⣟⣯⣷`，Maple Mono CN 16px 加粗，用 Herdr 原生的 `.frames()`（每帧 90ms），不占定时器
   - 完成显示绿色圆圈勾，标题加粗（像未读邮件），看过后自动恢复
 - **`mods/spaces-fold/`**：Spaces 列表的副本，把哪些机器被折叠了共享给 Agents 列表
 - **`mods/picker-title/`**：搜索框的副本。没命名的标签页和顶部标签栏一样显示 Agent 标题，不再显示编号，也能按标题搜索
-- **`mods/tabs-spin/`、`mods/pane-spin/`**：顶部标签栏和 pane 标题栏的副本，运行中的转圈速度改成 2 秒一圈，和 Agents 列表一致
+- **`mods/tabs-spin/`、`mods/pane-spin/`**：顶部标签栏和 pane 标题栏的副本，状态图标和字符转圈与 Agents 列表一致
 - **`mods/workspace-chrome-title/`**：侧栏顶部和底部的副本，只改了一处：放大镜按钮打开 `picker-title`
 - **`layouts/my-main.json`**：使用上面这些 mod 和 ghostty 主题的布局
 - **`keys.example.json`**：我的完整快捷键。`Cmd+Shift+P`、`Cmd+Shift+W` 打开 `picker-title`；`Cmd+↑/↓` 切换空间，`Cmd+←/→` 切换标签，`Cmd+[ / ]` 左右切换窗格，`Cmd+Shift+[ / ]` 上下切换窗格，`Cmd+W` 关闭窗格，`Cmd+R` / `Cmd+Shift+R` 重命名标签 / 空间，`Cmd+Ctrl+W` 关闭空间。安装时按键逐条合并进 `keys.json`，这里没列的快捷键保持不变
 - **`themes/ghostty.json`**：Ghostty 默认配色，并固定了状态颜色：运行中蓝 `#7aa6da`、完成绿 `#b9ca4a`、需要你红 `#d54e53`
-- **状态图标统一**：每种状态有自己的形状，不只靠颜色。需要你是 `Needs you` 标签或 `!`；完成是绿色勾（窗格标题是绿色 `Done` 标签，Spaces 收起时是 `✓`）；运行中是转圈；空闲是暗色空心圈。Agents 列表、标签栏、窗格标题、Spaces、搜索框都一样
+- **状态图标统一**：每种状态有自己的形状，不只靠颜色。需要你是 `Needs you` 标签或 `!`；完成是绿色勾（窗格标题是绿色 `Done` 标签，Spaces 收起时是 `✓`）；运行中是盲文字符转圈；空闲是暗色空心圈。Agents 列表、标签栏、窗格标题、Spaces、搜索框都一样
 - **`settings.example.json`**：外观设置，字体为 Maple Mono CN，字号 13，字重 300（Herdr 渲染比 Ghostty 偏粗），开启编程连字
 
 ### 安装
