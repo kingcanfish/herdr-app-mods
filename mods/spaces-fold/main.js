@@ -1,11 +1,11 @@
 // Workspace spaces: stable colored avatars, worktrees under their checkout,
 // grouped by machine when more than one is known. After a space's name, the repo
-// its first terminal is in now, only where unusual: branch, ahead/behind. Agent state lives in the agents list, not here. Click to
+// its first terminal is in now, only where unusual: branch, ahead/behind. spaces-fold: after the name, an icon and count per kind of agent in that space. Click to
 // switch, right-click for its menu, drag to reorder.
 
-import { View, div, svg } from "gpui-kit";
+import { View, div, svg, image } from "gpui-kit";
 import { v_flex, h_flex, ScrollHandle } from "gpui-base";
-import { spaces, machines, panes, run, openOverlay, exec, hc, theme, shared, setShared, watchFolder, window, layout } from "herdr";
+import { spaces, agents, machines, panes, run, openOverlay, exec, hc, theme, shared, setShared, watchFolder, window, layout } from "herdr";
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -75,6 +75,21 @@ export function glyph(status) {
 
 export function tone(t, status) {
   return t[status] ?? t.unknown;
+}
+
+// spaces-fold: the agents in each space, one badge per program (Claude Code, agy, ...): its icon
+// and how many there are, colored by the most urgent of them, so a space shows what runs in it
+// without opening the agents list.
+const URGENCY = { blocked: 3, done: 2, working: 1, idle: 0 };
+function agentGroups(list) {
+  const by = {};
+  for (const a of list) {
+    const key = a.program?.key ?? a.app ?? "agent";
+    const g = ((by[a.space] ??= {})[key] ??= { p: a.program, name: a.program?.name ?? key, n: 0, status: "idle" });
+    g.n += 1;
+    if ((URGENCY[a.status] ?? 0) > (URGENCY[g.status] ?? 0)) g.status = a.status;
+  }
+  return by;
 }
 
 export default class Spaces extends View {
@@ -463,6 +478,20 @@ export default class Spaces extends View {
       .when(g.behind > 0, (el) => el.child(div().flex_none().text_color(t.ansi1).child(`\u2193${g.behind}`)));
   }
 
+  // spaces-fold: icon + count per program, most urgent first. A picture icon can't be recolored,
+  // so the count carries the status color too.
+  agentTail(groups, t) {
+    const gs = Object.values(groups ?? {}).sort((a, b) => (URGENCY[b.status] - URGENCY[a.status]) || (b.n - a.n));
+    if (gs.length === 0) return div().flex_none();
+    return h_flex().flex_none().gap(7).items_center().text_size(11.5).children(gs.map((g) => {
+      const color = tone(t, g.status);
+      const mark = !g.p?.icon ? div().text_color(color).child("\u25cf")
+        : g.p.tint ? svg(g.p.icon).size(12).flex_none().text_color(color)
+        : image(g.p.icon).w(12).h(12).flex_none();
+      return h_flex().gap(2).items_center().child(mark).child(div().text_color(color).child(String(g.n)));
+    }));
+  }
+
   row({ w, i, g, tree }, t) {
     const on = w.active;
     const fromIndex = this.pressed === null ? -1 : spaces().findIndex(s => s.id === this.pressed);
@@ -516,6 +545,7 @@ export default class Spaces extends View {
           .when(Boolean(tree), el => el.pl(22).child(svg("mods/workspace-chrome/branch.svg").size(13).flex_none().text_color(t.dim)))
           .when(!tree, el => el.child(h_flex().size(18).flex_none().rounded(5).bg(fill).items_center().justify_center().text_size(10.5).font_bold().text_color("#ffffff").child(spaceAvatar(w.name))))
           .child(div().flex_initial().min_w(SIDE_MIN).truncate().text_color(t.foreground).child(w.name))
+          .child(this.agentTail(this.byAgent?.[w.id], t)) // spaces-fold: agent badges
           .child(g ? this.gitTail(g, tree, w.name, t) : div().flex_1()),
       );
   }
@@ -551,6 +581,7 @@ export default class Spaces extends View {
       changed = true;
     }
     if (changed) setShared("space.colors", kept);
+    this.byAgent = agentGroups(agents()); // spaces-fold: read once per render, used by every row
     const list = this.grouped(t, collapsed);
     // Bring the active space into view when it, or its place in the list, changes; a row already in view stays put.
     const active = sp.find(p => p.active)?.id;
