@@ -9,7 +9,7 @@ A set of customizations for the [Herdr](https://herdr.dev) desktop app (the herd
 | Path | What it does |
 |---|---|
 | `mods/agents-title/` | A modified copy of Herdr's **Agents** sidebar list (see below). |
-| `mods/spaces-fold/` | A copy of Herdr's **Spaces** list that also publishes which machines are folded, so the Agents list can fold with it. After each space's name it shows an icon and count per kind of agent in it (e.g. Claude Code ×2, agy ×1), colored by the most urgent one. |
+| `mods/spaces-fold/` | A copy of Herdr's **Spaces** list that also publishes which machines are folded, so the Agents list can fold with it. After each space's name it shows an icon and count per kind of agent in it (e.g. Claude Code ×2, agy ×1), colored by the most urgent one. A branch other than main/master, and ahead/behind, go on a second line under the name. |
 | `mods/picker-title/` | A copy of Herdr's search **picker** that labels and matches unnamed tabs by their agent's title, as the tab strip does, instead of by tab number. |
 | `mods/workspace-chrome-title/` | A copy of Herdr's sidebar header and footer whose search button opens `picker-title`. |
 | `mods/tabs-spin/`, `mods/pane-spin/` | Copies of Herdr's tab strip and pane header with the same status icons and character spinner as the Agents list. |
@@ -87,7 +87,7 @@ Apache License 2.0, the same license as Herdr, whose shipped mods these files ar
   - 在 Spaces 里折叠远程机器时，这台机器上的会话也会一起收起；置顶的会话和需要你处理的会话不会被藏起来
   - 运行中改为字符转圈：8 点盲文 `⣾⣽⣻⢿⡿⣟⣯⣷`，Maple Mono CN 16px 加粗，用 Herdr 原生的 `.frames()`（每帧 90ms），不占定时器
   - 完成显示绿色圆圈勾，标题加粗（像未读邮件），看过后自动恢复
-- **`mods/spaces-fold/`**：Spaces 列表的副本，把哪些机器被折叠了共享给 Agents 列表；每个空间名字后面按 Agent 种类显示图标和数量（比如 Claude Code 2 个、agy 1 个），颜色取其中最紧急的状态
+- **`mods/spaces-fold/`**：Spaces 列表的副本，把哪些机器被折叠了共享给 Agents 列表；每个空间名字后面按 Agent 种类显示图标和数量（比如 Claude Code 2 个、agy 1 个），颜色取其中最紧急的状态；不是 main/master 的分支名和领先/落后提交数放在名字下面的第二行
 - **`mods/picker-title/`**：搜索框的副本。没命名的标签页和顶部标签栏一样显示 Agent 标题，不再显示编号，也能按标题搜索
 - **`mods/tabs-spin/`、`mods/pane-spin/`**：顶部标签栏和 pane 标题栏的副本，状态图标和字符转圈与 Agents 列表一致
 - **`mods/workspace-chrome-title/`**：侧栏顶部和底部的副本，只改了一处：放大镜按钮打开 `picker-title`

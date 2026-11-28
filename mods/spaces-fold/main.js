@@ -449,7 +449,7 @@ export default class Spaces extends View {
     });
   }
 
-  // Only what's unusual, after the name: "herdr \u00b7 spike \u21912 \u21931". The repo or
+  // Only what's unusual, under the name (spaces-fold: was after it): "herdr \u00b7 spike \u21912 \u21931". The repo or
   // branch goes when the name already says it (a worktree is named after its branch),
   // and master/main go: nearly every space is on one. When the row is full, it
   // and the name both start from their text's width and give way in proportion.
@@ -465,14 +465,16 @@ export default class Spaces extends View {
     const branch = same(raw) || raw === "master" || raw === "main" ? "" : raw;
     const repo = tree || same(g.name) ? "" : g.name;
     const where = [repo, branch].filter(Boolean).join(" \u00b7 ");
+    // spaces-fold: this is a second line under the name now (was squeezed in after it, next to
+    // the agent badges), so it's null when there's nothing to say and the row stays one line.
+    if (!where && !(g.ahead > 0) && !(g.behind > 0)) return null;
     return h_flex()
-      .flex_auto()
-      .min_w(where ? SIDE_MIN : 0)
+      .min_w(0)
       .gap(5)
-      .justify_end()
       .items_center()
-      .text_size(11.5)
+      .text_size(11)
       .text_color(t.dim)
+      .when(Boolean(where) && !tree, (el) => el.child(svg("mods/workspace-chrome/branch.svg").size(11).flex_none()))
       .when(Boolean(where), (el) => el.child(div().min_w(0).truncate().child(where)))
       .when(g.ahead > 0, (el) => el.child(div().flex_none().text_color(t.ansi2).child(`\u2191${g.ahead}`)))
       .when(g.behind > 0, (el) => el.child(div().flex_none().text_color(t.ansi1).child(`\u2193${g.behind}`)));
@@ -498,11 +500,12 @@ export default class Spaces extends View {
     const colors = shared("space.colors") ?? {};
     const color = colors[w.id] ?? "ansi6";
     const fill = color.startsWith("#") ? color : (MARK[color] ?? t[color]);
+    const gitLine = g ? this.gitTail(g, tree, w.name, t) : null; // spaces-fold: branch on its own line
     return v_flex()
       .relative()
       .id(`space-${w.id}`)
       .px(8)
-      .h(rowHeight({ tree }))
+      .h(rowHeight({ tree }) + (gitLine ? 14 : 0)) // spaces-fold: room for the branch line
       .flex_none()
       .justify_center()
       .rounded(8)
@@ -544,10 +547,11 @@ export default class Spaces extends View {
           .items_center()
           .when(Boolean(tree), el => el.pl(22).child(svg("mods/workspace-chrome/branch.svg").size(13).flex_none().text_color(t.dim)))
           .when(!tree, el => el.child(h_flex().size(18).flex_none().rounded(5).bg(fill).items_center().justify_center().text_size(10.5).font_bold().text_color("#ffffff").child(spaceAvatar(w.name))))
-          .child(div().flex_initial().min_w(SIDE_MIN).truncate().text_color(t.foreground).child(w.name))
-          .child(this.agentTail(this.byAgent?.[w.id], t)) // spaces-fold: agent badges
-          .child(g ? this.gitTail(g, tree, w.name, t) : div().flex_1()),
-      );
+          .child(div().flex_1().min_w(SIDE_MIN).truncate().text_color(t.foreground).child(w.name))
+          .child(this.agentTail(this.byAgent?.[w.id], t)), // spaces-fold: agent badges, right-aligned
+      )
+      // spaces-fold: branch and ahead/behind under the name, lined up with it.
+      .when(Boolean(gitLine), (el) => el.child(gitLine.pl(tree ? 44 : 27)));
   }
 
   compact({ w, i }, t) {
