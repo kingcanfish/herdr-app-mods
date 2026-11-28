@@ -488,7 +488,7 @@ export default class Spaces extends View {
       const mark = !g.p?.icon ? div().text_color(color).child("\u25cf")
         : g.p.tint ? svg(g.p.icon).size(12).flex_none().text_color(color)
         : image(g.p.icon).w(12).h(12).flex_none();
-      return h_flex().gap(2).items_center().child(mark).child(div().text_color(color).child(String(g.n)));
+      return h_flex().gap(4).items_center().child(mark).child(div().text_color(color).child(String(g.n)));
     }));
   }
 
